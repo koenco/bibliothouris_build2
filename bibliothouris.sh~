@@ -4,7 +4,7 @@ drush make build/bibliothouris.make bibliothouris_build --prepare-install
 
 cd bibliothouris_build
 
-drush site-install --db-url=mysql://root:mysqlroot@localhost/bibliothouris_test --account-name=admin --account-pass=admin --site-name=bibliothouris -y
+drush site-install --db-url=mysql://root:mysqlroot@localhost/bibliothouris_build --account-name=admin --account-pass=admin --site-name=bibliothouris -y
 
 cd sites/all/modules
 
