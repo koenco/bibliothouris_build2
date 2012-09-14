@@ -227,8 +227,8 @@ projects[devel][version] = "1.2"
 ;projects[schema][subdir] = "developer"
 ;projects[schema][version] = "1.0-beta3"
 
-;projects[simpletest][subdir] = "developer"
-;projects[simpletest][version] = "2.0"
+projects[simpletest][subdir] = "developer"
+projects[simpletest][version] = "2.0"
 
 ; Features
 ;projects[atrium_features][type] = "module"
