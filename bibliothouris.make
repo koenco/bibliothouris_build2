@@ -71,12 +71,12 @@ projects[features][version = "1.0-rc1"
 ;projects[feeds][subdir] = "contrib"
 ;projects[feeds][version] = "2.0-alpha4"
 
-projects[field_collection][subdir] = "contrib"
-projects[field_collection][version] = "1.x-dev"
+;projects[field_collection][subdir] = "contrib"
+;projects[field_collection][version] = "1.x-dev"
 ;projects[field_collection][patch][] = "http://drupal.org/files/issue_1329856_1.patch"
 
-projects[field_group][subdir] = "contrib"
-projects[field_group][version] = "1.1"
+;projects[field_group][subdir] = "contrib"
+;projects[field_group][version] = "1.1"
 
 ; d.o problem with filefield_sources downloads
 ;projects[filefield_sources][subdir] = "contrib"
@@ -178,8 +178,8 @@ projects[references][version] = "2.0"
 projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0-rc1"
 
-projects[token][subdir] = "contrib"
-projects[token][version] = "1.0"
+;projects[token][subdir] = "contrib"
+;projects[token][version] = "1.0"
 
 ;projects[transliteration][subdir] = "contrib"
 ;projects[transliteration][version] = "3.0"
@@ -286,5 +286,5 @@ projects[omega][version] = "3.1"
 // allow simpletest to look into profiles for modules
 projects[drupal][type] = "core"
 ;projects[drupal][patch][] = "http://drupal.org/files/issues/911354.46.patch"
-projects[drupal][patch][] = "http://drupal.org/files/issues/object_conversion_menu_router_build-972536-1.patch"
-projects[drupal][patch][] = "http://drupal.org/files/issues/992540-3-reset_flood_limit_on_password_reset-drush.patch"
+;projects[drupal][patch][] = "http://drupal.org/files/issues/object_conversion_menu_router_build-972536-1.patch"
+;projects[drupal][patch][] = "http://drupal.org/files/issues/992540-3-reset_flood_limit_on_password_reset-drush.patch"
