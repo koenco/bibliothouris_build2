@@ -24,5 +24,6 @@ drush en masquerade -y
 drush en diff -y
 drush dl uuid_features && drush en uuid_features -y
 drush dl features_extra && drush en fe_block -y
+drush en simpletest -y
 
 drush en bibliotouris_book -y

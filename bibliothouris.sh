@@ -1,6 +1,6 @@
 cd /var/www
 
-drush make build/bibliothouris.make bibliothouris_build --prepare-install
+drush make buildfiles/bibliothouris.make bibliothouris_build --prepare-install
 
 cd bibliothouris_build
 
