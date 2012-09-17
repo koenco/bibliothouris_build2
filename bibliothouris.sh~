@@ -24,6 +24,8 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_themes.git
 got pull origin master
 
+drush en bibliothouristheme
+
 drush en views_ui -y
 
 drush en devel -y
