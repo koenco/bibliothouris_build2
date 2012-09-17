@@ -1,0 +1,2 @@
+cd /var/www/bibliothouris_build
+cat "testtest" | sudo -S chmod 777 sites/default/files
