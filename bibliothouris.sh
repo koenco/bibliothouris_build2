@@ -22,19 +22,20 @@ cd /var/www/bibliothouris_build/sites/all/themes
 #mkdir custom
 #cd custom
 
-drush dl adaptivetheme
+#drush dl adaptivetheme
 
-git init
-git remote add origin https://github.com/koenco/bibliothouris_themes.git
-git pull origin master
+#git init
+#git remote add origin https://github.com/koenco/bibliothouris_themes.git
+#git pull origin master
 
 #drush en corolla -y
  
 drush dl masquerade
 drush dl entitycache-1.x-dev -y
 drush dl features_extra
+drush dl node_export
 
-drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui -y
+drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export -y
 #drush dl uuid_features && drush en uuid_features -y
 drush dis uuid -y
 
