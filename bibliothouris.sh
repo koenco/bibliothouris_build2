@@ -20,12 +20,14 @@ cd /var/www/bibliothouris_build/sites/all/themes
 mkdir custom
 cd custom
 
+drush dl adaptivetheme
+
 git init
 git remote add origin https://github.com/koenco/bibliothouris_themes.git
 git pull origin master
 
-drush en corolla
-drush theme set default corolla
+drush en corolla -y
+drush vset theme_default corolla 
 
 drush en views_ui -y
 
