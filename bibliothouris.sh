@@ -24,7 +24,8 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_themes.git
 git pull origin master
 
-drush en bibliothouristheme
+drush en corolla
+drush theme set default corolla
 
 drush en views_ui -y
 
