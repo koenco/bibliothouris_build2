@@ -39,7 +39,7 @@ drush dl masquerade && drush en masquerade -y
 drush en diff -y
 #drush dl uuid_features && drush en uuid_features -y
 drush dis uuid -y
-drush dl entitycache-1.x-dev -y && drush en entitycache-1.x-dev -y
+drush dl entitycache-1.x-dev -y && drush en entitycache -y
 drush dl features_extra && drush en fe_block -y
 drush en simpletest -y
 
