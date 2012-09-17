@@ -16,11 +16,21 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
 git pull origin master
 
+cd /var/www/bibliothouris_build/sites/all/theme
+mkdir custom
+cd custom
+
+git init
+git remote add origin https://github.com/koenco/bibliothouris_themes.git
+got pull origin master
+
+drush en bibliothouristheme
+
 drush en views_ui -y
 
 drush en devel -y
 drush en devel_generate -y
-drush en masquerade -y
+drush dl masquerade && drush en masquerade -y
 drush en diff -y
 drush dl uuid_features && drush en uuid_features -y
 drush dl features_extra && drush en fe_block -y
