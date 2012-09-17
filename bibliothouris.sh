@@ -27,3 +27,5 @@ drush dl features_extra && drush en fe_block -y
 drush en simpletest -y
 
 drush en bibliotouris_book -y
+
+drush fr bibliotouris_book -y
