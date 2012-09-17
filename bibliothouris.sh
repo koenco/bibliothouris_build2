@@ -6,6 +6,8 @@ cd bibliothouris_build
 
 drush site-install --db-url=mysql://root:mysqlroot@localhost/bibliothouris_build --account-name=admin --account-pass=admin --site-name=bibliothouris -y
 
+sudo chmod 777 sites/default/files
+
 cd sites/all/modules
 
 mkdir custom
