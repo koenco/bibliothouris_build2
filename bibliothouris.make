@@ -63,8 +63,8 @@ projects[entity][version] = "1.0-rc2"
 projects[entity_autocomplete][subdir] = "contrib"
 projects[entity_autocomplete][version] = "1.0-beta2"
 
-projects[entitycache][subdir] = "contrib"
-projects[entitycache][version] = "1.1"
+;projects[entitycache][subdir] = "contrib"
+;projects[entitycache][version] = "1.1"
 
 projects[features][subdir] = "contrib"
 projects[features][version = "1.0-rc1"

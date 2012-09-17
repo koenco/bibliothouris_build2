@@ -2,6 +2,7 @@
 core = 7.x
 api = 2
 
+projects[] = drupal
 
 ; Contrib projects
 ;projects[apps][subdir] = "contrib"
