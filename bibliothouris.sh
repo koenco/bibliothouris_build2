@@ -18,19 +18,18 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
 git pull origin master
 
-#cd /var/www/bibliothouris_build/sites/all/themes
+cd /var/www/bibliothouris_build/sites/all/themes
 #mkdir custom
 #cd custom
 
-#drush dl adaptivetheme
+drush dl adaptivetheme
 
-#git init
-#git remote add origin https://github.com/koenco/bibliothouris_themes.git
-#git pull origin master
+git init
+git remote add origin https://github.com/koenco/bibliothouris_themes.git
+git pull origin master
 
 #drush en corolla -y
-#drush vset theme_default corolla 
-
+ 
 drush dl masquerade
 drush dl entitycache-1.x-dev -y
 drush dl features_extra
