@@ -31,18 +31,16 @@ git pull origin master
 #drush en corolla -y
 #drush vset theme_default corolla 
 
-drush en views_ui -y
+drush dl masquerade
+drush dl entitycache-1.x-dev -y
+drush dl features_extra
 
-drush en devel -y
+drush en devel devel_generate masquerade simpletest fe_block entitycache views_ui -y
 drush en devel_generate -y
-drush dl masquerade && drush en masquerade -y
 drush en diff -y
 #drush dl uuid_features && drush en uuid_features -y
 drush dis uuid -y
-drush dl entitycache-1.x-dev -y && drush en entitycache-1.x-dev -y
-drush dl features_extra && drush en fe_block -y
-drush en simpletest -y
 
 drush en bibliotouris_book -y
 
-drush fr bibliotouris_book -y
+#drush fr bibliotouris_book -y
