@@ -16,7 +16,7 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
 git pull origin master
 
-cd /var/www/bibliothouris_build/sites/all/theme
+cd /var/www/bibliothouris_build/sites/all/themes
 mkdir custom
 cd custom
 

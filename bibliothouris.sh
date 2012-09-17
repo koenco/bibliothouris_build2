@@ -22,7 +22,7 @@ cd custom
 
 git init
 git remote add origin https://github.com/koenco/bibliothouris_themes.git
-got pull origin master
+git pull origin master
 
 drush en bibliothouristheme
 
