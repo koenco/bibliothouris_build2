@@ -48,3 +48,7 @@ drush en diff devel devel_generate masquerade simpletest fe_block entitycache vi
 drush en bibliotouris_book -y
 
 drush fr bibliotouris_book -y
+
+drush en bibliothouris_user -y
+
+drush fr bibliothouris_user -y
