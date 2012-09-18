@@ -29,6 +29,10 @@ git pull origin master
 #git pull origin master
 
 #drush en corolla -y
+
+cd ../../..
+mkdir files
+chmod 777 -R files 
  
 drush dl masquerade
 drush dl entitycache-1.x-dev -y
