@@ -34,10 +34,11 @@ drush dl masquerade
 drush dl entitycache-1.x-dev -y
 drush dl features_extra
 drush dl node_export
+drush dl uuid_features-7.x-1.x-dev
 
-drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup -y
+drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup uuid_features -y
 #drush dl uuid_features && drush en uuid_features -y
-drush dis uuid -y
+#drush dis uuid -y
 
 drush en bibliotouris_book -y
 

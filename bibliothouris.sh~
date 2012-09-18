@@ -35,7 +35,7 @@ drush dl entitycache-1.x-dev -y
 drush dl features_extra
 drush dl node_export
 
-drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date -y
+drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup -y
 #drush dl uuid_features && drush en uuid_features -y
 drush dis uuid -y
 
