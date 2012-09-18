@@ -40,8 +40,9 @@ drush dl genpass
 drush dl email_registration
 drush dl autoassignrole
 drush dl administerusersbyrole
+drush dl simpletest_clone
 
-drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup uuid_features phone genpass email_registration autoassignrole administerusersbyrole -y
+drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup uuid_features phone genpass email_registration autoassignrole administerusersbyrole simpletest_clone -y
 #drush dl uuid_features && drush en uuid_features -y
 #drush dis uuid -y
 
