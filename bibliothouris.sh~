@@ -18,7 +18,7 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
 git pull origin master
 
-cd /var/www/bibliothouris_build/sites/all/themes
+#cd /var/www/bibliothouris_build/sites/all/themes
 #mkdir custom
 #cd custom
 
@@ -34,10 +34,16 @@ drush dl masquerade
 drush dl entitycache-1.x-dev -y
 drush dl features_extra
 drush dl node_export
+drush dl uuid_features-7.x-1.x-dev
+drush dl phone
+drush dl genpass
+drush dl email_registration
+drush dl autoassignrole
+drush dl administerusersbyrole
 
-drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup -y
+drush en diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup uuid_features phone genpass email_registration autoassignrole administerusersbyrole -y
 #drush dl uuid_features && drush en uuid_features -y
-drush dis uuid -y
+#drush dis uuid -y
 
 drush en bibliotouris_book -y
 
