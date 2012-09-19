@@ -53,7 +53,7 @@ drush en uuid diff devel devel_generate masquerade simpletest fe_block entitycac
 #drush dl uuid_features && drush en uuid_features -y
 #drush dis uuid -y
 
-drush en bibliotouris_book frankcr-y
+drush en bibliotouris_book -y
 
 drush fr bibliotouris_book -y
 
@@ -64,6 +64,8 @@ drush fr bibliothouris_user -y
 drush ucrt emp --mail="emp@emp.be" --password="emp"
 drush urol employee emp
 
+<<<<<<< HEAD
 drush ucrt member --mail="member@member.be" --password="member"
-
-drush node-export-import --file=/var/www/bibliothouris_build/sites/all/modules/custom/data/got.export 
+=======
+drush ucrt member --mail="member@member.be" --password="member"
+>>>>>>> 28c6271ad336d1f98e9393ccfca2973062ff661e
