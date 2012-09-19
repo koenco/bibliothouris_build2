@@ -60,3 +60,8 @@ drush fr bibliotouris_book -y
 drush en bibliothouris_user -y
 
 drush fr bibliothouris_user -y
+
+drush ucrt emp --mail="emp@emp.be" --password="emp"
+drush urol employee emp
+
+drush ucrt member --mail="member@member.be" --password="member"
