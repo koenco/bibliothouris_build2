@@ -53,7 +53,7 @@ drush en uuid diff devel devel_generate masquerade simpletest fe_block entitycac
 #drush dl uuid_features && drush en uuid_features -y
 #drush dis uuid -y
 
-drush en bibliotouris_book frankcr-y
+drush en bibliotouris_book -y
 
 drush fr bibliotouris_book -y
 
