@@ -18,19 +18,21 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
 git pull origin master
 
-#cd /var/www/bibliothouris_build/sites/all/themes
-#mkdir custom
-#cd custom
+cd /var/www/bibliothouris_build/sites/all/themes
+mkdir custom
+cd custom
 
 #drush dl adaptivetheme
 
-#git init
-#git remote add origin https://github.com/koenco/bibliothouris_themes.git
-#git pull origin master
+git init
+git remote add origin https://github.com/koenco/bibliothouris_themes.git
+git pull origin master
+drush en alphorn
+drush vset theme_default alphorn
 
 #drush en corolla -y
 
-cd ../../..
+cd /var/www/bibliothouris_build/sites
 mkdir files
 chmod 777 -R files 
  
