@@ -27,7 +27,7 @@ cd custom
 git init
 git remote add origin https://github.com/koenco/bibliothouris_themes.git
 git pull origin master
-drush en alphorn
+drush en alphorn -y
 drush vset theme_default alphorn
 
 #drush en corolla -y
