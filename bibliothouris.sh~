@@ -55,11 +55,11 @@ drush en uuid diff devel devel_generate masquerade simpletest fe_block entitycac
 
 drush en bibliotouris_book -y
 
-drush fr bibliotouris_book -y
-
 drush en bibliothouris_user -y
 
 drush fr bibliothouris_user -y
+drush fr bibliotouris_book -y
+
 
 drush ucrt emp --mail="emp@emp.be" --password="emp"
 drush urol employee emp

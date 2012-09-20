@@ -35,19 +35,7 @@ drush vset theme_default alphorn
 cd /var/www/bibliothouris_build/sites
 mkdir files
 chmod 777 -R files 
- 
-drush dl masquerade
-drush dl entitycache-1.x-dev -y
-drush dl features_extra
-drush dl node_export
-drush dl uuid_features-7.x-1.x-dev
-drush dl phone
-drush dl genpass
-drush dl email_registration
-drush dl autoassignrole
-drush dl administerusersbyrole
-drush dl simpletest_clone
-drush dl uuid-1.x-dev
+
 
 drush en uuid diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup uuid_features phone genpass email_registration autoassignrole administerusersbyrole simpletest_clone omega_tools -y
 #drush dl uuid_features && drush en uuid_features -y

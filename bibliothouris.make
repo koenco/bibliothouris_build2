@@ -5,6 +5,42 @@ api = 2
 projects[] = drupal
 
 ; Contrib projects
+projects[node_export][subdir] = "contrib"
+projects[node_export][version] = "3.0"
+
+projects[masquerade][subdir] = "contrib"
+projects[masquerade][version] = "1.0-rc4"
+
+projects[entitycache][subdir] = "contrib"
+projects[entitycache][version] = "1.x-dev"
+
+projects[features_extra][subdir] = "contrib"
+projects[features_extra][version] = "1.x-dev"
+
+projects[uuid_features][subdir] = "contrib"
+projects[uuid_features][version] = "1.x-dev"
+
+projects[phone][subdir] = "contrib"
+projects[phone][version] = "1.x-dev"
+
+projects[genpass][subdir] = "contrib"
+projects[genpass][version] = "1.0"
+
+projects[email_registration][subdir] = "contrib"
+projects[email_registration][version] = "1.0"
+
+projects[autoassignrole][subdir] = "contrib"
+projects[autoassignrole][version] = "1.x-dev"
+
+projects[administerusersbyrole][subdir] = "contrib"
+projects[administerusersbyrole][version] = "1.0-beta1"
+
+projects[simpletest_clone][subdir] = "contrib"
+projects[simpletest_clone][version] = "1.0-beta3"
+
+projects[uuid][subdir] = "contrib"
+projects[uuid][version] = "1.x-dev"
+
 ;projects[apps][subdir] = "contrib"
 ;projects[apps][version] = "1.0-beta6"
 
