@@ -4,9 +4,15 @@ drush make buildfiles/bibliothouris.make bibliothouris_build --prepare-install
 
 cd bibliothouris_build
 
-drush site-install --db-url=mysql://root:mysqlroot@localhost/bibliothouris_build --account-name=admin --account-pass=admin --site-name=bibliothouris -y
 
-#echo "testtest" | sudo -S chmod 777 sites/default/files
+#
+#  Edit following line with your mysql database, username and password
+#  (e.g. username: root
+#        password: mysqlroot
+#        db:       bibliothouris_build
+#   --db-url=mysqlroot://root:mysqlroot@localhost/bibliothouris_build
+#
+drush site-install --db-url=mysql://root:mysqlroot@localhost/bibliothouris_build --account-name=admin --account-pass=admin --site-name=Bibliothouris -y
 
 cd sites/all/modules
 
@@ -22,15 +28,11 @@ cd /var/www/bibliothouris_build/sites/all/themes
 mkdir custom
 cd custom
 
-#drush dl adaptivetheme
-
 git init
 git remote add origin https://github.com/koenco/bibliothouris_themes.git
 git pull origin master
 drush en alphorn -y
 drush vset theme_default alphorn
-
-#drush en corolla -y
 
 cd /var/www/bibliothouris_build/sites
 mkdir files
@@ -40,15 +42,15 @@ drush dl ds && drush en ds -y
 drush dl panels && drush en panels -y
 
 drush en uuid diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup uuid_features phone genpass email_registration autoassignrole administerusersbyrole simpletest_clone omega_tools -y
-#drush dl uuid_features && drush en uuid_features -y
-#drush dis uuid -y
 
 drush en bibliotouris_book -y
-
 drush en bibliothouris_user -y
 
 drush fr bibliothouris_user -y
 drush fr bibliotouris_book -y
+
+drush en bibliothouris_views -y
+drush fr bibliothouris_views -y
 
 drush ucrt emp --mail="emp@emp.be" --password="emp"
 drush urol employee emp
