@@ -36,6 +36,8 @@ cd /var/www/bibliothouris_build/sites
 mkdir files
 chmod 777 -R files 
 
+drush dl ds && drush en ds -y
+drush dl panels && drush en panels -y
 
 drush en uuid diff devel devel_generate masquerade simpletest fe_block entitycache views_ui node_export date date_popup uuid_features phone genpass email_registration autoassignrole administerusersbyrole simpletest_clone omega_tools -y
 #drush dl uuid_features && drush en uuid_features -y
@@ -47,7 +49,6 @@ drush en bibliothouris_user -y
 
 drush fr bibliothouris_user -y
 drush fr bibliotouris_book -y
-
 
 drush ucrt emp --mail="emp@emp.be" --password="emp"
 drush urol employee emp
