@@ -50,6 +50,9 @@ drush en bibliothouris_user -y
 drush fr bibliothouris_user -y
 drush fr bibliotouris_book -y
 
+drush en bibliothouris_views -y
+drush fr bibliothouris_views -y
+
 drush ucrt emp --mail="emp@emp.be" --password="emp"
 drush urol employee emp
 
