@@ -1,6 +1,7 @@
 #
 #  Edit following variables
 #
+
 document_root='/var/www'		# the main folder where drupal will be installed in
 install_folder='bibliothouris_build'	# the name of the drupal install folder, which will also be the url of the site
 mysql_username='root'			# your mysql username
@@ -10,10 +11,10 @@ site_admin='admin'			# the drupal site admin
 site_admin_pass='admin'			# the drupal site admin's password
 site_name='Bibliothouris'		# the site's name
 
-
 #---------------------------------------------------------------------------------------------#
 # 			Don't edit anything below this line				      #
 #---------------------------------------------------------------------------------------------#
+
 BASEDIR=$(dirname $0)
 
 
@@ -71,4 +72,4 @@ drush urol employee emp
 
 drush ucrt member --mail="member@member.be" --password="member"
 
-drush node-export-import --file=$document_root/$install_folder/sites/all/modules/custom/data/got.export 
+drush node-export-import --file=/var/www/bibliothouris_build/sites/all/modules/custom/data/books.export 
