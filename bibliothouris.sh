@@ -46,7 +46,9 @@ drush vset theme_default alphorn
 
 cd ../../..
 mkdir files
-chmod 777 -R files 
+#
+# comment the chmod when deploying
+chmod 755 -R files 
 
 drush dl ds && drush en ds -y
 drush dl panels && drush en panels -y

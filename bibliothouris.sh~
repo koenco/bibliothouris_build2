@@ -1,14 +1,14 @@
 #
 #  Edit following variables
 #
-document_root='/var/www'
-install_folder='bibliothouris_build'
-mysql_username='root'
-mysql_password='mysqlroot'
-mysql_db='localhost/bibliothouris'
-site_admin='admin'
-site_admin_pass='admin'
-site_name='Bibliothouris'
+document_root='/var/www'		# the main folder where drupal will be installed in
+install_folder='bibliothouris_build'	# the name of the drupal install folder, which will also be the url of the site
+mysql_username='root'			# your mysql username
+mysql_password='mysqlroot'		# your mysql password
+mysql_db='localhost/bibliothouris'	# the location and name of the database
+site_admin='admin'			# the drupal site admin
+site_admin_pass='admin'			# the drupal site admin's password
+site_name='Bibliothouris'		# the site's name
 
 
 #---------------------------------------------------------------------------------------------#
@@ -46,7 +46,10 @@ drush vset theme_default alphorn
 
 cd ../../..
 mkdir files
-chmod 777 -R files 
+#
+# comment the chmod when deploying
+#
+chmod 755 -R files 
 
 drush dl ds && drush en ds -y
 drush dl panels && drush en panels -y
