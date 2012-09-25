@@ -1,18 +1,28 @@
-cd /var/www
-
-drush make buildfiles/bibliothouris.make bibliothouris_build --prepare-install
-
-cd bibliothouris_build
-
-
 #
-#  Edit following line with your mysql database, username and password
-#  (e.g. username: root
-#        password: mysqlroot
-#        db:       bibliothouris_build
-#   --db-url=mysqlroot://root:mysqlroot@localhost/bibliothouris_build
+#  Edit following variables
 #
-drush site-install --db-url=mysql://root:mysqlroot@localhost/bibliothouris_build --account-name=admin --account-pass=admin --site-name=Bibliothouris -y
+document_root='/var/www'
+install_folder='bibliothouris_build'
+mysql_username='root'
+mysql_password='mysqlroot'
+mysql_db='localhost/bibliothouris'
+site_admin='admin'
+site_admin_pass='admin'
+site_name='Bibliothouris'
+
+
+#---------------------------------------------------------------------------------------------#
+# 			Don't edit anything below this line				      #
+#---------------------------------------------------------------------------------------------#
+BASEDIR=$(dirname $0)
+
+cd $document_root
+
+drush make $BASEDIR/bibliothouris.make $install_folder --prepare-install
+
+cd $install_folder
+
+drush site-install --db-url=mysql://$mysql_username:$mysql_password@$mysql_db --account-name=$site_admin --account-pass=$site_admin_pass --site-name=$site_name -y
 
 cd sites/all/modules
 
@@ -24,7 +34,7 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
 git pull origin master
 
-cd /var/www/bibliothouris_build/sites/all/themes
+cd ../../themes
 mkdir custom
 cd custom
 
@@ -34,7 +44,7 @@ git pull origin master
 drush en alphorn -y
 drush vset theme_default alphorn
 
-cd /var/www/bibliothouris_build/sites
+cd ../../..
 mkdir files
 chmod 777 -R files 
 
@@ -52,9 +62,11 @@ drush fr bibliotouris_book -y
 drush en bibliothouris_views -y
 drush fr bibliothouris_views -y
 
+drush en bibliothouris_data -y
+
 drush ucrt emp --mail="emp@emp.be" --password="emp"
 drush urol employee emp
 
 drush ucrt member --mail="member@member.be" --password="member"
 
-drush node-export-import --file=/var/www/bibliothouris_build/sites/all/modules/custom/data/got.export 
+drush node-export-import --file=$document_root/$install_folder/sites/all/modules/custom/data/got.export 
