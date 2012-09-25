@@ -16,11 +16,11 @@ site_name='Bibliothouris'		# the site's name
 #---------------------------------------------------------------------------------------------#
 BASEDIR=$(dirname $0)
 
-cd $document_root
 
-drush make $BASEDIR/bibliothouris.make $install_folder --prepare-install
 
-cd $install_folder
+drush make $BASEDIR/bibliothouris.make $document_root/$install_folder --prepare-install
+
+cd $document_root/$install_folder
 
 drush site-install --db-url=mysql://$mysql_username:$mysql_password@$mysql_db --account-name=$site_admin --account-pass=$site_admin_pass --site-name=$site_name -y
 

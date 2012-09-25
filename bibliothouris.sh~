@@ -18,7 +18,7 @@ BASEDIR=$(dirname $0)
 
 cd $document_root
 
-drush make $BASEDIR/bibliothouris.make $install_folder --prepare-install
+drush make $BASEDIR/bibliothouris.make $document_root/$install_folder --prepare-install
 
 cd $install_folder
 
@@ -48,7 +48,6 @@ cd ../../..
 mkdir files
 #
 # comment the chmod when deploying
-#
 chmod 755 -R files 
 
 drush dl ds && drush en ds -y
