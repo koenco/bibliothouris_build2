@@ -1,18 +1,29 @@
-cd /var/www
-
-drush make buildfiles/bibliothouris.make bibliothouris_build --prepare-install
-
-cd bibliothouris_build
-
-
 #
-#  Edit following line with your mysql database, username and password
-#  (e.g. username: root
-#        password: mysqlroot
-#        db:       bibliothouris_build
-#   --db-url=mysqlroot://root:mysqlroot@localhost/bibliothouris_build
+#  Edit following variables
 #
-drush site-install --db-url=mysql://root:mysqlroot@localhost/bibliothouris_build --account-name=admin --account-pass=admin --site-name=Bibliothouris -y
+
+document_root='/var/www'		# the main folder where drupal will be installed in
+install_folder='bibliothouris_build'	# the name of the drupal install folder, which will also be the url of the site
+mysql_username='root'			# your mysql username
+mysql_password='mysqlroot'		# your mysql password
+mysql_db='localhost/bibliothouris'	# the location and name of the database
+site_admin='admin'			# the drupal site admin
+site_admin_pass='admin'			# the drupal site admin's password
+site_name='Bibliothouris'		# the site's name
+
+#---------------------------------------------------------------------------------------------#
+# 			Don't edit anything below this line				      #
+#---------------------------------------------------------------------------------------------#
+
+BASEDIR=$(dirname $0)
+
+cd $document_root
+
+drush make $BASEDIR/bibliothouris.make $install_folder --prepare-install
+
+cd $install_folder
+
+drush site-install --db-url=mysql://$mysql_username:$mysql_password@$mysql_db --account-name=$site_admin --account-pass=$site_admin_pass --site-name=$site_name -y
 
 cd sites/all/modules
 
@@ -24,7 +35,7 @@ git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
 git pull origin master
 
-cd /var/www/bibliothouris_build/sites/all/themes
+cd ../../themes
 mkdir custom
 cd custom
 
@@ -34,9 +45,11 @@ git pull origin master
 drush en alphorn -y
 drush vset theme_default alphorn
 
-cd /var/www/bibliothouris_build/sites
+cd ../../..
 mkdir files
-chmod 777 -R files 
+#
+# comment the chmod when deploying
+chmod 755 -R files 
 
 drush dl ds && drush en ds -y
 drush dl panels && drush en panels -y
