@@ -17,7 +17,12 @@ site_name='Bibliothouris'		# the site's name
 
 BASEDIR=$(dirname $0)
 
-drush make $BASEDIR/bibliothouris.make $document_root/$install_folder --prepare-install
+if [ $BASEDIR == '.' ]; then
+	drush make bibliothouris.make $document_root/$install_folder --prepare-install
+else 
+	drush make $BASEDIR/bibliothouris.make $document_root/$install_folder --prepare-install
+fi
+#drush make $BASEDIR/bibliothouris.make $document_root/$install_folder --prepare-install
 
 cd $document_root/$install_folder
 
