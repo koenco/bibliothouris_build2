@@ -4,7 +4,10 @@ api = 2
 
 projects[] = drupal
 
-; Contrib projects
+; Contrib project
+projects[auto_nodetitle][subdir] = "contrib"
+projects[auto_nodetitle][version] = "1.0"
+
 projects[node_export][subdir] = "contrib"
 projects[node_export][version] = "3.0"
 
