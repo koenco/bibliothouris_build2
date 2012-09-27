@@ -6,9 +6,9 @@ cd custom
 
 git init
 git remote add origin https://github.com/koenco/bibliothouris_modules.git
-git clone https://github.com/koenco/bibliothouris_modules.git
+git pull origin master
 
-cp bibliothouris_modules/* .
+cp -R bibliothouris_modules/* .
 rm -rf bibliothouris_modules
 
 cd /var/www/bibliothouris_build/sites/all/themes/
@@ -20,7 +20,7 @@ cd custom
 
 git init
 git remote add origin https://github.com/koenco/bibliothouris_themes.git
-git clone https://github.com/koenco/bibliothouris_themes.git
+git pull origin master
 
-cp bibliothouris_themes/* .
+cp -R bibliothouris_themes/* .
 rm -rf bibliothouris_themes
