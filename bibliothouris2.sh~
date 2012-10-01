@@ -18,7 +18,7 @@ site_name='Bibliothouris'		# the site's name
 BASEDIR=$(dirname $0)
 
 mkdir $document_root/$install_folder
-cd $document_root/$install_folder
+cd $install_folder
 
 git init
 git remote add origin https://github.com/koenco/bibliothouris.git
