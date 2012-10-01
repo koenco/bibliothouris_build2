@@ -250,3 +250,7 @@ display:none;
 .red {
     color: #ff0000;
 }
+
+#first-time {
+    display:none;
+}
