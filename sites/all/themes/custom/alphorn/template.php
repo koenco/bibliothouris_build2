@@ -53,8 +53,16 @@ function alphorn_preprocess_user_profile(&$variables) {
     $email = '';
   }
 
-  $variables['name'] = $account->field_first_name['und'][0]['value'] . ' ' .
-    $account->field_last_name['und'][0]['value'];
+  $first_name = '';
+  $last_name = '';
+  if (count($account->field_first_name) > 0) {
+    $first_name = $account->field_first_name['und'][0]['value'];
+  }
+  if (count($account->field_last_name) > 0) {
+    $last_name = $account->field_last_name['und'][0]['value'];
+  }
+
+  $variables['name'] = $first_name . ' ' . $last_name;
   $variables['street'] = $street;
   $variables['date_of_birth'] = $date_of_birth;
   $variables['city'] = $city;
