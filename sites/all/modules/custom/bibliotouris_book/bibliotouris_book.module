@@ -1,0 +1,287 @@
+<?php
+/**
+ * @file
+ * Code for the Bibliotouris_book feature.
+ */
+
+include_once 'bibliotouris_book.features.inc';
+
+function bibliotouris_book_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'views_exposed_form' && $form['#id'] == 'views-exposed-form-view-all-books-page') {
+    // add the javascript file which triggers autosubmit when clicking a value in the dropdown list
+    drupal_add_js(drupal_get_path('module', 'bibliotouris_book') . '/autocomplete_autosubmit.js', array('group' => JS_THEME));
+    drupal_add_js(drupal_get_path('module', 'bibliotouris_book') . '/autocompletehook.js', array('group' => JS_THEME));
+
+    $form['field_isbn_value'] = array(
+      '#type' => 'textfield',
+      '#autocomplete_path' => 'autocomplete/book/isbn',
+      '#attributes' => array('class' => array('auto_submit')), //add this attribute so jquery can complete its check
+    );
+    $form['title'] = array(
+      '#type' => 'textfield',
+      '#autocomplete_path' => 'autocomplete/book/title',
+      '#attributes' => array('class' => array('auto_submit')), //add this attribute so jquery can complete its check
+    );
+    $form['field_author_last_name_value'] = array(
+      '#type' => 'textfield',
+      '#autocomplete_path' => 'autocomplete/book/lastname',
+      '#attributes' => array('class' => array('auto_submit')), //add this attribute so jquery can complete its check
+    );
+    $form['field_author_first_name_value'] = array(
+      '#type' => 'textfield',
+      '#autocomplete_path' => 'autocomplete/book/firstname',
+      '#attributes' => array('class' => array('auto_submit')), //add this attribute so jquery can complete its check
+    );
+  }
+}
+
+function bibliotouris_book_node_validate($node, $form, &$form_state) {
+  if ($node->type == 'book') {
+    if ($form_state['values']['field_isbn']['und']['0']['value'] != NULL) {
+      $isbn = str_replace(array('-', '/', ' '), '', $form_state['values']['field_isbn']['und']['0']['value']);
+      checkisbn($isbn);
+    }
+
+    $number_of_books = $form_state['values']['field_number_of_books']['und'][0]['value'];
+    $times_loaned = getTimesLendedOut($node->nid);
+    if ($times_loaned < $number_of_books) {
+      $form_state['values']['field_status']['und'][0]['tid'] = "4";
+    } else if ($times_loaned == $number_of_books) {
+      $form_state['values']['field_status']['und'][0]['tid'] = "1";
+    } else {
+      form_set_error('field_number_of_books', "Your number of books is less than the number of times the book is lended out at this moment.");
+    }
+  }
+}
+
+function bibliotouris_book_menu() {
+  $items['autocomplete/book/isbn'] = array(
+    'page callback' => 'autocomplete_book_isbn',
+    'access callback' => TRUE,
+    'weight' => 1,
+  );
+  $items['autocomplete/book/title'] = array(
+    'page callback' => 'autocomplete_book_title',
+    'access callback' => TRUE,
+    'weight' => 1,
+  );
+  $items['autocomplete/book/lastname'] = array(
+    'page callback' => 'autocomplete_book_lastname',
+    'access callback' => TRUE,
+    'weight' => 1,
+  );
+  $items['autocomplete/book/firstname'] = array(
+    'page callback' => 'autocomplete_book_firstname',
+    'access callback' => TRUE,
+    'weight' => 1,
+  );
+  return $items;
+}
+
+function autocomplete_book_isbn($string = '') {
+  if ($_GET['q'] == "autocomplete/book/isbn") {
+    return drupal_not_found();
+  }
+  else {
+    $items = array();
+    if (isset($string)) {
+
+      $query = db_select('field_data_field_isbn', 'isb');
+      $value = $query->join('field_data_field_author_last_name', 'ln', 'ln.entity_id = isb.entity_id');
+      $value = $query->leftJoin('field_data_field_author_first_name', 'fn', 'fn.entity_id = isb.entity_id');
+      $value = $query->join('node', 'n', 'isb.entity_id = n.nid');
+      $value = $query->fields('isb', array('entity_id', 'field_isbn_value',));
+      $value = $query->condition('field_author_last_name_value', '%' . $_POST['lastname'] . '%', 'LIKE');
+      if ($_POST['firstname'] != "") {
+        $value = $query->condition('field_author_first_name_value', '%' . $_POST['firstname'] . '%', 'LIKE');
+      }
+      $value = $query->condition('field_isbn_value', '%' . $_POST['isbn'] . '%', 'LIKE');
+      $value = $query->condition('n.title', '%' . $_POST['title'] . '%', 'LIKE');
+      $value = $query->range(0, 10)
+        ->execute();
+      $data = array();
+
+      foreach ($value as $val) {
+        $items[$val->field_isbn_value] = check_plain($val->field_isbn_value);
+      }
+
+      if (count($items) == 0) {
+        $items[$string] = check_plain("No books found with this isbn");
+      }
+    }
+    print drupal_json_output($items);
+    exit();
+  }
+}
+
+function autocomplete_book_title($string = '') {
+  if ($_GET['q'] == "autocomplete/book/title") {
+    return drupal_not_found();
+  }
+  else {
+    $items = array();
+
+    $query = db_select('node', 'n');
+    $value = $query->join('field_data_field_author_last_name', 'ln', 'ln.entity_id = n.nid');
+    $value = $query->leftJoin('field_data_field_author_first_name', 'fn', 'ln.entity_id = fn.entity_id');
+    $value = $query->join('field_data_field_isbn', 'isb', 'ln.entity_id = isb.entity_id');
+    $value = $query->fields('n', array('nid', 'title',));
+    $value = $query->condition('field_author_last_name_value', '%' . $_POST['lastname'] . '%', 'LIKE');
+    if ($_POST['firstname'] != "") {
+      $value = $query->condition('field_author_first_name_value', '%' . $_POST['firstname'] . '%', 'LIKE');
+    }
+    $value = $query->condition('field_isbn_value', '%' . $_POST['isbn'] . '%', 'LIKE');
+    $value = $query->condition('n.title', '%' . $_POST['title'] . '%', 'LIKE');
+    $value = $query->range(0, 10)
+      ->execute();
+    $data = array();
+
+    foreach ($value as $val) {
+      $items[$val->title] = check_plain($val->title);
+    }
+
+    if (count($items) == 0) {
+      $items[$string] = check_plain("No books found with this title");
+    }
+
+    print drupal_json_output($items);
+    exit();
+  }
+}
+
+function autocomplete_book_lastname($string = '') {
+  if ($_GET['q'] == "autocomplete/book/lastname") {
+    return drupal_not_found();
+  }
+  else {
+    $items = array();
+    if (isset($string)) {
+
+
+      $query = db_select('field_data_field_author_last_name', 'ln');
+      $value = $query->leftJoin('field_data_field_author_first_name', 'fn', 'ln.entity_id = fn.entity_id');
+      $value = $query->join('field_data_field_isbn', 'isb', 'ln.entity_id = isb.entity_id');
+      $value = $query->join('node', 'n', 'ln.entity_id = n.nid');
+      $value = $query->fields('ln', array('field_author_last_name_value',));
+      $value = $query->condition('field_author_last_name_value', '%' . $_POST['lastname'] . '%', 'LIKE');
+      if ($_POST['firstname'] != "") {
+        $value = $query->condition('field_author_first_name_value', '%' . $_POST['firstname'] . '%', 'LIKE');
+      }
+      $value = $query->condition('field_isbn_value', '%' . $_POST['isbn'] . '%', 'LIKE');
+      $value = $query->condition('n.title', '%' . $_POST['title'] . '%', 'LIKE');
+      $value = $query->range(0, 10)
+        ->execute();
+      $data = array();
+
+      foreach ($value as $val) {
+        $items[$val->field_author_last_name_value] = check_plain($val->field_author_last_name_value);
+      }
+
+      if (count($items) == 0) {
+        $items[$string] = check_plain("No books found with this last name");
+      }
+    }
+    print drupal_json_output($items);
+    exit();
+  }
+}
+
+function autocomplete_book_firstname($string = '') {
+  if ($_GET['q'] == "autocomplete/book/firstname") {
+    return drupal_not_found();
+  }
+  else {
+    $items = array();
+    if (isset($string)) {
+
+
+      $query = db_select('field_data_field_author_first_name', 'fn');
+      $value = $query->join('field_data_field_author_last_name', 'ln', 'ln.entity_id = fn.entity_id');
+      $value = $query->join('field_data_field_isbn', 'isb', 'ln.entity_id = isb.entity_id');
+      $value = $query->join('node', 'n', 'ln.entity_id = n.nid');
+      $value = $query->fields('fn', array('field_author_first_name_value',));
+      $value = $query->condition('field_author_last_name_value', '%' . $_POST['lastname'] . '%', 'LIKE');
+      $value = $query->condition('field_author_first_name_value', '%' . $_POST['firstname'] . '%', 'LIKE');
+      $value = $query->condition('field_isbn_value', '%' . $_POST['isbn'] . '%', 'LIKE');
+      $value = $query->condition('n.title', '%' . $_POST['title'] . '%', 'LIKE');
+      $value = $query->range(0, 10)
+        ->execute();
+      $data = array();
+
+      foreach ($value as $val) {
+        $items[$val->field_author_first_name_value] = check_plain($val->field_author_first_name_value);
+      }
+
+      if (count($items) == 0) {
+        $items[$string] = check_plain("No books found with this first name");
+      }
+    }
+    print drupal_json_output($items);
+    exit();
+  }
+}
+
+function checkisbn($isbn) {
+
+  $isbn = str_replace(array(' ', '-', '.'), '', $isbn);
+  $length = strlen($isbn);
+  $checkdigit = substr($isbn, -1);
+  if ($length == 10) {
+    if (!is_numeric(substr($isbn, -10, 9))) {
+      form_set_error('field_isbn', "Your isbn does not only contain numbers.");
+      return FALSE;
+    }
+    $checkdigit = (!is_numeric($checkdigit)) ? $checkdigit : strtoupper($checkdigit);
+    $checkdigit = ($checkdigit == "X") ? "10" : $checkdigit;
+
+    $sum = 0;
+
+    for ($i = 0; $i < 9; $i++) {
+      $sum = $sum + ($isbn[$i] * (10 - $i));
+    }
+
+    $sum = $sum + $checkdigit;
+    $mod = $sum % 11;
+
+    if ($mod == 0) {
+      return TRUE;
+    }
+    else {
+      form_set_error('field_isbn', "Your isbn contains a bad checkdigit.");
+      return FALSE;
+    }
+  }
+  else {
+    if ($length == 13) {
+      if (!is_numeric(substr($isbn, -13, 12))) {
+        form_set_error('field_isbn', "Your isbn does not only contain numbers.");
+        return FALSE;
+      }
+      $sum = $isbn[0] + ($isbn[1] * 3) + $isbn[2] + ($isbn[3] * 3) +
+        $isbn[4] + ($isbn[5] * 3) + $isbn[6] + ($isbn[7] * 3) +
+        $isbn[8] + ($isbn[9] * 3) + $isbn[10] + ($isbn[11] * 3);
+
+
+      $mod = $sum % 10;
+
+      $correct_checkdigit = 10 - $mod;
+
+      $correct_checkdigit = ($correct_checkdigit == "10") ? "0" : $correct_checkdigit;
+
+
+      if ($checkdigit == $correct_checkdigit) {
+        return TRUE;
+      }
+
+      else {
+        form_set_error('field_isbn', "Your isbn contains a bad checkdigit.");
+        return FALSE;
+      }
+
+    }
+    else {
+      form_set_error('field_isbn', "Your isbn has an invalid length.");
+      return FALSE;
+    }
+  }
+}

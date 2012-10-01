@@ -1,0 +1,164 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: laurentm
+ * Date: 13-9-12
+ * Time: 10:46
+ * To change this template use File | Settings | File Templates.
+ */
+
+module_load_include('test', 'simpletest_clone');
+
+class IsbnValidatorTestCase extends SimpleTestCloneTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'ISBN Validator',
+      'description' => 'Test the ISBN validator',
+      'group' => 'Bibliotouris',
+    );
+  }
+
+  public function setUp() {
+    parent::setup('bibliotouris_book');
+    /*$roles = user_roles();
+     $role = 'medewerker';
+
+     // Find the index for the role we want to assign to the user.
+     $index = array_search($role, $roles);
+
+
+     // Get the permissions for the role.
+     $permissions = user_role_permissions(array(array_search($role, $roles) => $role));
+
+
+     // Create the user with the permissions.
+     $user = $this->drupalCreateUser(array_keys($permissions[$index]));
+
+
+     // Assign the role.
+     $user->roles[$index] = $role;
+
+   // Return the user we have created.
+   $this->medewerker = $this->drupalCreateUser(array('create book content'));
+
+   /*
+    * $permissions = array(
+     'access content',
+     'create page content',
+     'edit own page content',
+     'create story content',
+     'edit own story content',
+   );
+   $basic_user = $this->drupalCreateUserRolePerm($permissions);
+
+   // Create an admin user that can bypass revision moderation.
+   $permissions = array(
+     'access content',
+     'administer nodes',
+   );
+   $admin_user = $this->drupalCreateUserRolePerm($permissions);
+
+   // Assign users to their test suite-wide properties.
+   $this->basic_user = $basic_user;
+   $this->admin_user = $admin_user;
+    */
+
+  }
+
+  public function testValidIsbn() {
+    $this->assertTrue(checkisbn('9780553593716'), 'Valid isbn13');
+    $this->assertTrue(checkisbn('978-0553-5--93716'), 'Valid isbn13 dashes');
+    $this->assertTrue(checkisbn('9780 5535 93716'), 'Valid isbn13 spaces');
+    $this->assertTrue(checkisbn('0553573403'), 'Valid isbn10');
+    $this->assertTrue(checkisbn('055-35-73403'), 'Valid isbn10 dashes');
+    $this->assertTrue(checkisbn('0553 5734 03'), 'Valid isbn10 spaces');
+    $this->assertFalse(checkisbn('9780553593715'), 'Invalid Isbn13');
+    $this->assertFalse(checkisbn('0553573402'), 'Invalid Isbn10');
+    $this->assertFalse(checkisbn('055357340222'), 'Invalid Isbn Test invalid length');
+    $this->assertFalse(checkisbn('055a573402'), 'Invalid Isbn Test not numeric');
+  }
+}
+
+class BibliothourisBookTestCase extends SimpleTestCloneTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Book test',
+      'description' => 'Test the book content type',
+      'group' => 'Bibliotouris',
+    );
+  }
+
+  public function setUp() {
+    parent::setup('bibliotouris_book');
+    /*$this->admin_user = $this->drupalCreateUser(array("create book content"));
+    $this->drupalLogin($this->admin_user);*/
+    $this->medewerker = $this->drupalCreateUser(array('create book content'));
+    $this->drupalLogin($this->medewerker);
+
+  }
+
+  public function testAddBook() {
+
+    $this->drupalGet("node/add/book");
+
+    $edit = array();
+    $edit['title'] = 'MyBook';
+    $edit['field_isbn[und][0][value]'] = '9780553593716';
+    $edit['field_author_last_name[und][0][value]'] = 'TestAuthor';
+    $edit['field_category[und][1]'] = 'TRUE';
+    $this->drupalPost('node/add/book', $edit, t('Save'));
+    $this->assertText(t('Book @title has been created.', array('@title' => $edit['title'])));
+
+    $edit = array();
+    //$edit['title'] = 'MyBook';
+    $edit['field_isbn[und][0][value]'] = '9780553593716';
+    $edit['field_author_last_name[und][0][value]'] = 'TestAuthor';
+    $edit['field_category[und][1]'] = 'TRUE';
+    $this->drupalPost('node/add/book', $edit, t('Save'));
+    $this->assertText(t('Title field is required.'));
+
+    $edit = array();
+    $edit['title'] = 'MyBook';
+    //$edit['field_isbn[und][0][value]'] = '9780553593716';
+    $edit['field_author_last_name[und][0][value]'] = 'TestAuthor';
+    $edit['field_category[und][1]'] = 'TRUE';
+    $this->drupalPost('node/add/book', $edit, t('Save'));
+    $this->assertText(t('ISBN field is required.'));
+
+    $edit = array();
+    $edit['title'] = 'MyBook';
+    $edit['field_isbn[und][0][value]'] = '9780553593716';
+    //$edit['field_author_last_name[und][0][value]'] = 'TestAuthor';
+    $edit['field_category[und][1]'] = 'TRUE';
+    $this->drupalPost('node/add/book', $edit, t('Save'));
+    $this->assertText(t('Author Last name field is required.'));
+
+    $edit = array();
+    $edit['title'] = 'MyBook';
+    $edit['field_isbn[und][0][value]'] = '9780553593716';
+    $edit['field_author_last_name[und][0][value]'] = 'TestAuthor';
+    //$edit['field_category[und][1]'] = 'TRUE';
+    $this->drupalPost('node/add/book', $edit, t('Save'));
+    $this->assertText(t('Category field is required.'));
+
+    $edit = array();
+    $edit['title'] = 'MyBook';
+    $edit['field_isbn[und][0][value]'] = '4498956298489512981';
+    $edit['field_author_last_name[und][0][value]'] = 'TestAuthor';
+    $edit['field_category[und][1]'] = 'TRUE';
+    $this->drupalPost('node/add/book', $edit, t('Save'));
+    $this->assertText(t('Your isbn has an invalid length.'));
+
+    $edit = array();
+    $edit['title'] = 'MyBook';
+    $edit['field_isbn[und][0][value]'] = '1234567890';
+    $edit['field_author_last_name[und][0][value]'] = 'TestAuthor';
+    $edit['field_category[und][1]'] = 'TRUE';
+    $this->drupalPost('node/add/book', $edit, t('Save'));
+    $this->assertText(t('Your isbn contains a bad checkdigit.'));
+
+  }
+
+}
