@@ -1,7 +1,0 @@
-name = bibliothouris_data
-description = Adds data to the bibliothouris website
-core = 7.x
-package = Bibliothouris
-dependencies[] = bibliothouris_user
-dependencies[] = date
-dependencies[] = phone

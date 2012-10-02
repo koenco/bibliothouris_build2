@@ -68,11 +68,11 @@ drush fr bibliotouris_book -y
 drush en bibliothouris_views -y
 drush fr bibliothouris_views -y
 
-drush en bibliothouris_data -y
-
 drush ucrt emp --mail="emp@emp.be" --password="emp"
 drush urol employee emp
 
 drush ucrt member --mail="member@member.be" --password="member"
 
 drush node-export-import --file=$document_root/$install_folder/sites/all/modules/custom/data/books.export 
+
+drush en bibliothouris_data -y
